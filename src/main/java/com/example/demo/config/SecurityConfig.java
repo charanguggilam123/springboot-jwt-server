@@ -59,7 +59,8 @@ public class SecurityConfig {
  	/*
  	 * No need to provide authentication provider because spring boot defaults to
  	 * DAOAuthenticationProvider with UserDetailsServiceBean and password encoder bean
- 	 * which in this case our custom implementation of user details service and bcrypt encoder declared in 55
+ 	 * which in this case our custom implementation of user details service and
+ 	 * bcrypt encoder declared below
  	 * */
  	@Bean
  	AuthenticationManager authManager(AuthenticationConfiguration config) throws Exception {

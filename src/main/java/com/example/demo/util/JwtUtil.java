@@ -74,14 +74,13 @@ public class JwtUtil {
 
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> extraClaims = new HashMap<>();
-		System.out.println(userDetails.getUsername());
 		return doGenerate(extraClaims, userDetails.getUsername());
 	}
 
 	private String doGenerate(Map<String, Object> extraClaims, String subject) {
 		return Jwts.builder().setClaims(extraClaims).setSubject(subject).setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-				// key should be x bytes
+				// key should be 256 bytes because we used hmac sha 256 algorithm
 				.signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256).compact();
 
 	}

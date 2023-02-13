@@ -40,13 +40,13 @@ public class JWTFilter extends OncePerRequestFilter {
 	    final String userEmail;
 	    if (authHeader == null || !authHeader.startsWith("Bearer")) {
 	      System.out.println("No token found");
-	      filterChain.doFilter(request, response);
+	      filterChain.doFilter(request, response); /*next filter i.e uesrnamepassswordAuhentication filter will throw error if path is protected and username details are not set in the context of securitycontextholder*/
 	      return;
 	    }
 	    jwtToken = authHeader.substring(7);
-	 // need to do something to get name from jwt to verify details
 	    userEmail = jwtUtil.getUsernameFromToken(jwtToken);
 	    System.out.println("userEmail: "+userEmail);
+	    
 	    if(userEmail!=null && SecurityContextHolder.getContext().getAuthentication() == null ) {
 	    	UserDetails userDetails = service.loadUserByUsername(userEmail);
 	    	if (jwtUtil.validateToken(jwtToken, userDetails)) {
